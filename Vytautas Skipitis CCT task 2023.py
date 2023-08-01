@@ -138,7 +138,7 @@ def optimal_amount_of_light(road_length: int):
     for index, reiksme in enumerate(list_of_street_lights):
         if reiksme == 1:
             whitch_lights_to_turn_on.append(index)
-    print('print('index of street lights that need to be turned on : ', whitch_lights_to_turn_on)', whitch_lights_to_turn_on)
+    print('index of street lights that need to be turned on : ', whitch_lights_to_turn_on)
 
     how_much_to_turn_on = count
     return how_much_to_turn_on
