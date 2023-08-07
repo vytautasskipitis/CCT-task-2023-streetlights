@@ -41,23 +41,33 @@ def find_index_of_darkest_street_light(road_length: int, not_working_street_ligh
     # visual diagrams of road lighting levels
     # hide this code if you don't want to see the diagrams
     ###
-    plt.plot(list_of_lights_strengths)
-    plt.xlabel('street lighting index')
-    plt.ylabel('lighting intensity')
-    plt.title('lighting of the entire street')
-    plt.grid(True)
-    plt.show()
+    # plt.plot(list_of_lights_strengths)
+    # plt.xlabel('street lighting index')
+    # plt.ylabel('lighting intensity')
+    # plt.title('lighting of the entire street')
+    # plt.grid(True)
+    # plt.show()
     ###
 
-    # Returns the index of the darkest lamp
-    return list_of_lights_strengths.index(min(list_of_lights_strengths))
+    # checks if the darkest lamp is the off lamp
+    min_value = float('inf')
+    darkest_inactive = 0
+    for i in range(len(list_of_lights_on)):
+        if list_of_lights_on[i] == 0 and list_of_lights_strengths[i] < min_value:
+            min_value = list_of_lights_strengths[i]
+            darkest_inactive = i
+
+    # Returns the index of the darkest inactive lamp
+    return darkest_inactive
 
 
 if __name__ == "__main__":
     # to check which lamp receives the least amount of light:
+    assert find_index_of_darkest_street_light(road_length=200, not_working_street_lights=[0, 1, 2]) == 0
+    assert find_index_of_darkest_street_light(road_length=1000, not_working_street_lights=[11, 12, 13, 14, 15, 16, 17, 18, 19]) == 15
+    assert find_index_of_darkest_street_light(road_length=200, not_working_street_lights=[4, 5, 6]) == 4
     assert find_index_of_darkest_street_light(road_length=200, not_working_street_lights=[8, 9, 10]) == 10
     assert find_index_of_darkest_street_light(road_length=100, not_working_street_lights=[3, 4, 5]) == 5
-    assert find_index_of_darkest_street_light(road_length=1000, not_working_street_lights=[10, 11, 12, 13, 14, 15, 16, 17, 18, 19]) == 14
     print("ALL TESTS PASSED")
 
 ###############################################################################################################
@@ -101,32 +111,32 @@ def optimal_amount_of_light(road_length: int):
     # visual diagrams of road lighting levels
     # hide this code if you don't want to see the diagrams:
 ###############################################################################################################
-    list_of_lights_strengths = []
-    final_light_intensity = 0
-
-    # for each street light, it finds the distances to the neighboring lightning
-    for i in range(len(list_of_street_lights)):
-        for number in range(len(list_of_street_lights)):
-            # finds distances
-            distance = number - i
-            # (>0.01 -> ignore (10 neighboring flashlight is suitable))
-            if abs(distance) < 11:
-                # let's convert the distance to meters
-                distance = abs(distance * 20)
-                # "if the neighboring lamp is lit, then we add its light, and if it's not lit, then we let it pass."
-                if list_of_street_lights[number] == 1:
-                    final_light_intensity += illumination_intensity(distance)
-
-        # Create a list containing the final intensities of the lamps
-        list_of_lights_strengths.append(final_light_intensity)
-        final_light_intensity = 0
-
-    plt.plot(list_of_lights_strengths)
-    plt.xlabel('street lighting index')
-    plt.ylabel('lighting intensity')
-    plt.title('(OPTIMAL) lighting of the entire street')
-    plt.grid(True)
-    plt.show()
+    # list_of_lights_strengths = []
+    # final_light_intensity = 0
+    #
+    # # for each street light, it finds the distances to the neighboring lightning
+    # for i in range(len(list_of_street_lights)):
+    #     for number in range(len(list_of_street_lights)):
+    #         # finds distances
+    #         distance = number - i
+    #         # (>0.01 -> ignore (10 neighboring flashlight is suitable))
+    #         if abs(distance) < 11:
+    #             # let's convert the distance to meters
+    #             distance = abs(distance * 20)
+    #             # "if the neighboring lamp is lit, then we add its light, and if it's not lit, then we let it pass."
+    #             if list_of_street_lights[number] == 1:
+    #                 final_light_intensity += illumination_intensity(distance)
+    #
+    #     # Create a list containing the final intensities of the lamps
+    #     list_of_lights_strengths.append(final_light_intensity)
+    #     final_light_intensity = 0
+    #
+    # plt.plot(list_of_lights_strengths)
+    # plt.xlabel('street lighting index')
+    # plt.ylabel('lighting intensity')
+    # plt.title('(OPTIMAL) lighting of the entire street')
+    # plt.grid(True)
+    # plt.show()
 ###############################################################################################################
 
     # the list with working and non-working lights turns into a list with indexes that indicate which lamp should be turned on
@@ -153,6 +163,9 @@ if __name__ == "__main__":
     assert optimal_amount_of_light(road_length=200) == 3
     assert optimal_amount_of_light(road_length=5000) == 37
     print("ALL TESTS PASSED")
+
+
+
 
 
 
